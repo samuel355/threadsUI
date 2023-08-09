@@ -11,7 +11,7 @@ import {
   Image,
 } from 'react-native';
 import {TabView, TabBar} from 'react-native-tab-view';
-
+const logo = '../assets/icons/threads-app-icon.png'
 const DATA = [
   {name: 'Marissa Castillo'},
   {name: 'Denzel Curry'},
@@ -54,7 +54,7 @@ const FirstRoute = ({
       data={DATA}
       keyExtractor={(item, i) => String(i)}
       renderItem={({item}) => (
-        <View style={[styles.scene, {backgroundColor: 'white'}]}>
+        <View style={[styles.scene, {backgroundColor: 'white', marginHorizontal: 12, marginTop: 12}]}>
           <Text>{item.name}</Text>
         </View>
       )}
@@ -83,7 +83,11 @@ const SecondRoute = ({
     data={DATA}
     keyExtractor={(item, i) => String(i)}
     renderItem={({item}) => (
-      <View style={[styles.scene, {backgroundColor: 'white'}]}>
+      <View
+        style={[
+          styles.scene,
+          {backgroundColor: 'white', marginHorizontal: 12, marginTop: 12},
+        ]}>
         <Text>{item.name}</Text>
       </View>
     )}
@@ -171,9 +175,7 @@ const Home = () => {
           }}>
           <Image
             style={styles.logo}
-            source={{
-              uri: 'https://freelogopng.com/images/all_img/1688663318threads-logo-white.png',
-            }}
+            source={require(logo)}
           />
         </View>
 
