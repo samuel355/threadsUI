@@ -9,11 +9,20 @@ import {
   Animated,
   Text,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import {TabView, TabBar} from 'react-native-tab-view';
 const logo = '../assets/icons/threads-app-icon.png'
+const addIcon = '../assets/icons/add.png'
+const menuIcon = '../assets/icons/menu.png'
+
+const likeIcon = '../assets/icons/like.png'
+const commentIcon = '../assets/icons/comment.png'
+const retweetIcon = '../assets/icons/retweet.png'
+const sendIcon = '../assets/icons/send.png'
+
 const DATA = [
-  {name: 'Marissa Castillo'},
+  {name: 'Marissa Castillo', handle: 'sobal_official', time: '16m', content: 'Behind the scenes, people are dating our thread WIVES. Chairman wo last warning nie hmm.', likes: 12, replies: 3, profileImage : 'profile.jpg'},
   {name: 'Denzel Curry'},
   {name: 'Miles Ferguson'},
   {name: 'Kenny Moreno'},
@@ -54,8 +63,74 @@ const FirstRoute = ({
       data={DATA}
       keyExtractor={(item, i) => String(i)}
       renderItem={({item}) => (
-        <View style={[styles.scene, {backgroundColor: 'white', marginHorizontal: 12, marginTop: 12}]}>
-          <Text>{item.name}</Text>
+        <View
+          style={[
+            styles.scene,
+            {
+              backgroundColor: 'white',
+              marginLeft: 12,
+              marginTop: 12,
+              borderBottomWidth: 0.5,
+              borderBlockColor: '#eee',
+            },
+          ]}>
+          <View style={{display: 'flex', flexDirection: 'row'}}>
+            <View style={{position: 'relative'}}>
+              <TouchableOpacity>
+                <Image
+                  style={styles.profileImage}
+                  source={require(`../assets/profile.jpg`)}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Image style={styles.addIcon} source={require(addIcon)} />
+              </TouchableOpacity>
+            </View>
+
+            <View style={{display: 'flex', flexDirection: 'column'}}>
+              <View style={styles.contentContainer}>
+                <TouchableOpacity style={styles.handle}>
+                  <Text>{item.handle}</Text>
+                </TouchableOpacity>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    flex: 1,
+                    marginRight: 10,
+                  }}>
+                  <Text style={styles.time}>{item.time}</Text>
+                  <TouchableOpacity style={styles.menuDots}>
+                    <Image
+                      style={{width: 20, height: 20, objectFit: 'contain'}}
+                      source={require(menuIcon)}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <TouchableOpacity style={styles.postContainer}>
+                <Text style={{lineHeight: 24}}>{item.content}</Text>
+              </TouchableOpacity>
+
+              <View style={styles.iconsContainer}>
+                <TouchableOpacity>
+                  <Image style={styles.icon} source={require(likeIcon)} />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image style={styles.icon} source={require(commentIcon)} />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image style={styles.icon} source={require(retweetIcon)} />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image style={styles.icon} source={require(sendIcon)} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
         </View>
       )}
       contentContainerStyle={{paddingTop: HEADER_HEIGHT + TAB_BAR_HEIGHT}}
@@ -202,7 +277,6 @@ const Home = () => {
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={{flex: 1}}>
         <View style={{position: 'absolute', top: 0, backgroundColor: 'white', width: '100%', height: '100%', flex: 1}}>
-
         </View>
         <TabView
           navigationState={{index, routes}}
@@ -226,6 +300,61 @@ const styles = StyleSheet.create({
     objectFit: 'contain',
     marginLeft: 'auto',
     marginRight: 'auto',
+  },
+  profileImage: {
+    width: 45,
+    height: 45,
+    objectFit: 'contain',
+    borderRadius: 200,
+  },
+  addIcon: {
+    width: 20,
+    height: 20,
+    objectFit: 'contain',
+    borderWidth: 1,
+    borderColor: 'white',
+    position: 'absolute',
+    left: 30,
+    bottom: -3,
+    borderRadius: 50,
+    backgroundColor: 'white',
+  },
+  handle: {
+    fontWeight: '600',
+    fontSize: 14,
+  },
+  time: {
+    marginRight: 10,
+    color: 'gray',
+    textAlign: 'right',
+  },
+  contentContainer: {
+    marginLeft: 15,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  postContainer: {
+    marginLeft: 15,
+    marginTop: 10,
+  },
+  post: {
+    paddingRight: 12,
+  },
+  menuDots: {
+    
+  },
+  icon: {
+    width: 22,
+    height: 22,
+    objectFit: 'container',
+    marginLeft: 15,
+    marginTop: 15,
+  },
+  iconsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 6,
   },
 });
 
