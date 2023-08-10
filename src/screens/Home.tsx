@@ -22,16 +22,66 @@ const retweetIcon = '../assets/icons/retweet.png'
 const sendIcon = '../assets/icons/send.png'
 
 const DATA = [
-  {name: 'Marissa Castillo', handle: 'sobal_official', time: '16m', content: 'Behind the scenes, people are dating our thread WIVES. Chairman wo last warning nie hmm.', likes: 12, replies: 3, profileImage : 'profile.jpg'},
-  {name: 'Denzel Curry'},
-  {name: 'Miles Ferguson'},
-  {name: 'Kenny Moreno'},
-  {name: 'Shelby Craig'},
-  {name: 'Jordyn Brewer'},
-  {name: 'Tanya Walker'},
-  {name: 'Nolan Figueroa'},
-  {name: 'Sophia Gibbs'},
-  {name: 'Vincent Sandoval'},
+  {
+    name: 'Marissa Castillo',
+    handle: 'sobal_official',
+    time: '16m',
+    content:
+      'Behind the scenes, people are dating our thread WIVES. Chairman wo last warning nie hmm.',
+    likes: 12,
+    replies: 3,
+    profileImage: 'profile.jpg',
+  },
+  {
+    name: 'Denzel Curry',
+    handle: 'sobal_official',
+    time: '16m',
+    content:
+      'Behind the scenes, people are dating our thread WIVES. Chairman wo last warning nie hmm.',
+    likes: 12,
+    replies: 3,
+    profileImage: 'profile.jpg',
+  },
+  {
+    name: 'Miles Ferguson',
+    handle: 'sobal_official',
+    time: '16m',
+    content:
+      'Behind the scenes, people are dating our thread WIVES. Chairman wo last warning nie hmm.',
+    likes: 12,
+    replies: 3,
+    profileImage: 'profile.jpg',
+  },
+  {
+    name: 'Kenny Moreno',
+    handle: 'sobal_official',
+    time: '16m',
+    content:
+      'Behind the scenes, people are dating our thread WIVES. Chairman wo last warning nie hmm.',
+    likes: 12,
+    replies: 3,
+    profileImage: 'profile.jpg',
+  },
+  {
+    name: 'Kenny Moreno',
+    handle: 'sobal_official',
+    time: '16m',
+    content:
+      'Behind the scenes, people are dating our thread WIVES. Chairman wo last warning nie hmm.',
+    likes: 12,
+    replies: 3,
+    profileImage: 'profile.jpg',
+  },
+  {
+    name: 'Kenny Moreno',
+    handle: 'sobal_official',
+    time: '16m',
+    content:
+      'Behind the scenes, people are dating our thread WIVES. Chairman wo last warning nie hmm.',
+    likes: 12,
+    replies: 3,
+    profileImage: 'profile.jpg',
+  },
 ];
 const HEADER_HEIGHT = 40;
 const TAB_BAR_HEIGHT = 40;
@@ -49,6 +99,7 @@ const FirstRoute = ({
 }: any) => {
   return (
     <Animated.FlatList
+      style={{backgroundColor: 'white'}}
       showsVerticalScrollIndicator={false}
       ref={firstRef}
       scrollEventThrottle={1}
@@ -68,13 +119,15 @@ const FirstRoute = ({
             styles.scene,
             {
               backgroundColor: 'white',
-              marginLeft: 12,
               marginTop: 12,
               borderBottomWidth: 0.5,
               borderBlockColor: '#eee',
+              alignItems: 'center',
+              marginVertical: 4,
+              marginLeft: 6
             },
           ]}>
-          <View style={{display: 'flex', flexDirection: 'row'}}>
+          <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}}>
             <View style={{position: 'relative'}}>
               <TouchableOpacity>
                 <Image
@@ -130,7 +183,7 @@ const FirstRoute = ({
                 </TouchableOpacity>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
       )}
       contentContainerStyle={{paddingTop: HEADER_HEIGHT + TAB_BAR_HEIGHT}}
@@ -145,6 +198,7 @@ const SecondRoute = ({
   onMomentumScrollBegin,
 }: any) => (
   <Animated.FlatList
+    style={{backgroundColor: 'white'}}
     showsVerticalScrollIndicator={false}
     ref={secondRef}
     scrollEventThrottle={1}
@@ -292,7 +346,7 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   scene: {
-    height: 150,
+    height: 135,
   },
   logo: {
     width: 40,
