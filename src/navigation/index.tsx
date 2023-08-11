@@ -38,8 +38,8 @@ const HomeTabs = () => {
             <Image
               source={focused ? require(homeBoldIcon) : require(homeLightIcon)}
               style={{
-                width: 30,
-                height: 30,
+                width: 28,
+                height: 28,
                 tintColor: focused ? '#000' : '#444',
               }}
             />
@@ -57,8 +57,8 @@ const HomeTabs = () => {
                 focused ? require(searchBoldIcon) : require(searchLightIcon)
               }
               style={{
-                width: 30,
-                height: 30,
+                width: 28,
+                height: 28,
                 tintColor: focused ? '#000' : '#444',
               }}
             />
@@ -70,12 +70,14 @@ const HomeTabs = () => {
 
       <Tab.Screen
         options={({route}) => ({
+          tabBarStyle: {display: route.name === 'Create' ? 'none' : 'block'},
+          unmountOnBlur: true,
           tabBarIcon: ({focused}) => (
             <Image
               source={focused ? require(createIcon) : require(createIcon)}
               style={{
-                width: 30,
-                height: 30,
+                width: 28,
+                height: 28,
                 tintColor: focused ? '#000' : '#444',
               }}
             />
@@ -91,8 +93,8 @@ const HomeTabs = () => {
             <Image
               source={focused ? require(likedIcon) : require(likeIcon)}
               style={{
-                width: 30,
-                height: 30,
+                width: 28,
+                height: 28,
                 tintColor: focused ? '#000' : '#444',
               }}
             />
@@ -108,8 +110,8 @@ const HomeTabs = () => {
             <Image
               source={focused ? require(userBoldIcon) : require(userLightIcon)}
               style={{
-                width: 30,
-                height: 30,
+                width: 28,
+                height: 28,
                 tintColor: focused ? '#000' : '#444',
               }}
             />

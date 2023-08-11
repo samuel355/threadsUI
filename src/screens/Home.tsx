@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   Pressable,
 } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import {TabView, TabBar} from 'react-native-tab-view';
@@ -136,7 +136,7 @@ const FirstRoute = ({
   // }
 
   return (
-    <GestureHandlerRootView>
+    <>
       <Animated.FlatList
         style={{backgroundColor: 'white'}}
         showsVerticalScrollIndicator={false}
@@ -166,7 +166,7 @@ const FirstRoute = ({
                 marginLeft: 6,
               },
             ]}>
-            <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}}>
+            <TouchableOpacity style={{display: 'flex', flexDirection: 'row', paddingHorizontal: 10}}>
               <View style={{position: 'relative'}}>
                 <TouchableOpacity>
                   <Image
@@ -191,7 +191,6 @@ const FirstRoute = ({
                       alignItems: 'center',
                       justifyContent: 'flex-end',
                       flex: 1,
-                      marginRight: 10,
                     }}>
                     <Text style={styles.time}>{item.time}</Text>
                     <TouchableOpacity style={styles.menuDots}>
@@ -227,25 +226,8 @@ const FirstRoute = ({
         )}
         contentContainerStyle={{paddingTop: HEADER_HEIGHT + TAB_BAR_HEIGHT}}
       />
-      {isOpen && (
-        <>
-          <Pressable style={styles.backdrop} onPress={toggleSheet} />
-          <View
-            style={{
-              backgroundColor: 'white',
-              padding: 16,
-              height: 220,
-              width: '100%',
-              position: 'absolute',
-              bottom: -20 * 1.1,
-              borderTopRightRadius: 20,
-              borderTopLeftRadius: 20,
-              zIndex: 1,
-              flex: 1,
-            }}></View>
-        </>
-      )}
-    </GestureHandlerRootView>
+      
+    </>
   );
 };
 
@@ -393,7 +375,7 @@ const Home = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1, borderRadius:20}}>
         <View
           style={{
             position: 'absolute',

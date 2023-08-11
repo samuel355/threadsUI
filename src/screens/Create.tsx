@@ -1,19 +1,27 @@
-import React, {useCallback, useMemo, useRef} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import Home from './Home';
 
-const Create = () => {
+type Props = {
+  navigation: any;
+};
+const Create = ({navigation}: Props) => {
   // ref
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['20%', '95%'], []);
+  const snapPoints = ['95%'];
 
   // callbacks
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
+
+  const handleNavigation = () =>{
+    navigation.navigate('Home')
+  }
 
   // renders
   return (
@@ -21,11 +29,15 @@ const Create = () => {
       <BottomSheet
         enablePanDownToClose
         ref={bottomSheetRef}
-        index={1}
         snapPoints={snapPoints}
-        onChange={handleSheetChanges}>
+        onChange={handleSheetChanges}
+        onClose={handleNavigation}
+        backdropComponent={Home}>
         <View style={styles.contentContainer}>
           <Text>Awesome 🎉</Text>
+          <TouchableOpacity onPress={handleNavigation}>
+            <Text>Go back</Text>
+          </TouchableOpacity>
         </View>
       </BottomSheet>
     </GestureHandlerRootView>
