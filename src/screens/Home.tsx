@@ -9,9 +9,13 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  Modal,
+  Alert,
 } from 'react-native';
-import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
+import {GestureHandlerRootView, ScrollView} from 'react-native-gesture-handler';
 import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetBackdropProps,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
 
@@ -117,29 +121,31 @@ const FirstRoute = ({
   syncOffset,
   firstRef,
   onMomentumScrollBegin,
-  openModal,
-  toggleModal,
-  navigation
+  navigation,
+  isCommentModalOpen,
+  setIsCommentModalOpen,
+  retweetModalOpen,
+  setRetweetModalOpen,
+  sendModalOpen,
+  setSendModalOpen,
+  menuOpen,
+  setMenuOpen,
 }: any) => {
   const [likedPost, setLikedPost] = useState(false);
   const [isOpen, setOpen] = useState(false);
 
-    const toggleSheet = () => {
-      setOpen(!isOpen);
-    };
-
-  // function updateLiked(id: any) {
-  //   var result = DATA.find((item) => item.id === id);
-  //   if(result){
-  //     if(result.liked === false){
-  //       console.log(likedPost)
-  //       return setLikedPost(true)
-  //     }else if(result.liked === true){
-  //       console.log(likedPost);
-  //       return setLikedPost(false);
-  //     }
-  //   }
-  // }
+  const addFriend = () =>
+    Alert.alert('Add sobal_official', '', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+      },
+      {
+        text: 'Follow',
+        onPress: () => console.log('OK Pressed'),
+        style: 'default',
+      },
+    ]);
 
   return (
     <>
@@ -172,7 +178,12 @@ const FirstRoute = ({
                 marginLeft: 6,
               },
             ]}>
-            <TouchableOpacity style={{display: 'flex', flexDirection: 'row', paddingHorizontal: 10}}>
+            <TouchableOpacity
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                paddingHorizontal: 10,
+              }}>
               <View style={{position: 'relative'}}>
                 <TouchableOpacity>
                   <Image
@@ -180,7 +191,7 @@ const FirstRoute = ({
                     source={require(`../assets/profile.jpg`)}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={addFriend}>
                   <Image style={styles.addIcon} source={require(addIcon)} />
                 </TouchableOpacity>
               </View>
@@ -199,7 +210,9 @@ const FirstRoute = ({
                       flex: 1,
                     }}>
                     <Text style={styles.time}>{item.time}</Text>
-                    <TouchableOpacity style={styles.menuDots}>
+                    <TouchableOpacity
+                      style={styles.menuDots}
+                      onPress={() => setMenuOpen(!menuOpen)}>
                       <Image
                         style={{width: 20, height: 20, objectFit: 'contain'}}
                         source={require(menuIcon)}
@@ -216,13 +229,16 @@ const FirstRoute = ({
                   <TouchableOpacity>
                     <Image style={styles.icon} source={require(likeIcon)} />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={()=>navigation.navigate('comment')}>
+                  <TouchableOpacity
+                    onPress={() => setIsCommentModalOpen(!isCommentModalOpen)}>
                     <Image style={styles.icon} source={require(commentIcon)} />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={toggleSheet}>
+                  <TouchableOpacity
+                    onPress={() => setRetweetModalOpen(!retweetModalOpen)}>
                     <Image style={styles.icon} source={require(retweetIcon)} />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={toggleModal}>
+                  <TouchableOpacity
+                    onPress={() => setSendModalOpen(!sendModalOpen)}>
                     <Image style={styles.icon} source={require(sendIcon)} />
                   </TouchableOpacity>
                 </View>
@@ -232,7 +248,6 @@ const FirstRoute = ({
         )}
         contentContainerStyle={{paddingTop: HEADER_HEIGHT + TAB_BAR_HEIGHT}}
       />
-      
     </>
   );
 };
@@ -271,17 +286,30 @@ const SecondRoute = ({
 );
 
 const Home = ({navigation}: Props) => {
-  const [openCommentModal, setOpenCommentModal] = useState(true);
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+  const [retweetModalOpen, setRetweetModalOpen] = useState(false);
+  const [sendModalOpen, setSendModalOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   // ref
   const bottomSheetRef = useRef<BottomSheet>(null);
-
-  // variables
-  const snapPoints = ['30%'];
 
   // callbacks
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
+
+  const renderBackdrop = useCallback(
+    (props_: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        {...props_}
+        pressBehavior="close"
+        opacity={0.8}
+        disappearsOnIndex={-1}
+      />
+    ),
+    [],
+  );
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
@@ -325,6 +353,14 @@ const Home = ({navigation}: Props) => {
             position={position}
             syncOffset={syncOffset}
             firstRef={firstRef}
+            isCommentModalOpen={isCommentModalOpen}
+            setIsCommentModalOpen={setIsCommentModalOpen}
+            retweetModalOpen={retweetModalOpen}
+            setRetweetModalOpen={setRetweetModalOpen}
+            sendModalOpen={sendModalOpen}
+            setSendModalOpen={setSendModalOpen}
+            menuOpen={menuOpen}
+            setMenuOpen={setMenuOpen}
             onMomentumScrollBegin={onMomentumScrollBegin}
           />
         );
@@ -386,7 +422,14 @@ const Home = ({navigation}: Props) => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={{flex: 1}}>
+      <GestureHandlerRootView
+        style={{flex: 1, position: 'relative', paddingTop: 50}}>
+        {isCommentModalOpen && (
+          <TouchableOpacity
+            onPress={() => setIsCommentModalOpen(false)}
+            activeOpacity={0.8}></TouchableOpacity>
+        )}
+
         <View
           style={{
             position: 'absolute',
@@ -396,6 +439,7 @@ const Home = ({navigation}: Props) => {
             height: '100%',
             flex: 1,
           }}></View>
+
         <TabView
           navigationState={{index, routes}}
           renderScene={renderScene}
@@ -403,19 +447,66 @@ const Home = ({navigation}: Props) => {
           onIndexChange={setIndex}
           initialLayout={initialLayout}
         />
-      </SafeAreaView>
-      <GestureHandlerRootView>
-        <BottomSheet
-          ref={bottomSheetRef}
-          snapPoints={snapPoints}
-          enablePanDownToClose={true}
-          onClose={() => setOpenCommentModal(false)}>
-          <BottomSheetView style={styles.contentContainer}>
-            <Text>Awesome 🎉</Text>
-          </BottomSheetView>
-        </BottomSheet>
+        {isCommentModalOpen ? (
+          <BottomSheet
+            ref={bottomSheetRef}
+            snapPoints={['95%']}
+            enablePanDownToClose={true}
+            onClose={() => setIsCommentModalOpen(false)}
+            backdropComponent={renderBackdrop}>
+            <BottomSheetView style={styles.contentContainer}>
+              <Text>Awesome 🎉</Text>
+            </BottomSheetView>
+          </BottomSheet>
+        ) : (
+          <></>
+        )}
+
+        {retweetModalOpen ? (
+          <BottomSheet
+            ref={bottomSheetRef}
+            snapPoints={['25%']}
+            enablePanDownToClose={true}
+            onClose={() => setRetweetModalOpen(false)}
+            backdropComponent={renderBackdrop}>
+            <BottomSheetView style={styles.contentContainer}>
+              <Text>Awesome 🎉</Text>
+            </BottomSheetView>
+          </BottomSheet>
+        ) : (
+          <></>
+        )}
+
+        {sendModalOpen ? (
+          <BottomSheet
+            ref={bottomSheetRef}
+            snapPoints={['55%']}
+            enablePanDownToClose={true}
+            onClose={() => setSendModalOpen(false)}
+            backdropComponent={renderBackdrop}>
+            <BottomSheetView style={styles.contentContainer}>
+              <Text>Awesome 🎉</Text>
+            </BottomSheetView>
+          </BottomSheet>
+        ) : (
+          <></>
+        )}
+
+        {menuOpen ? (
+          <BottomSheet
+            ref={bottomSheetRef}
+            snapPoints={['50%']}
+            enablePanDownToClose={true}
+            onClose={() => setMenuOpen(false)}
+            backdropComponent={renderBackdrop}>
+            <BottomSheetView style={styles.contentContainer}>
+              <Text>Awesome 🎉</Text>
+            </BottomSheetView>
+          </BottomSheet>
+        ) : (
+          <></>
+        )}
       </GestureHandlerRootView>
-      
     </>
   );
 };
@@ -525,15 +616,24 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
   backdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     zIndex: 1,
   },
+  backDrop: {
+    position: 'absolute',
+    width: '200%',
+    height: '200%',
+    backgroundColor: 'black',
+    opacity: 0.6,
+    right: 0,
+    bottom: 0,
+    top: '-100%',
+    flex: 1,
+    zIndex: 1,
+  },
+  commentModalContainer: {},
 });
 
 export default Home;
