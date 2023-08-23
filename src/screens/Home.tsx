@@ -537,9 +537,29 @@ const Home = ({navigation}: Props) => {
             snapPoints={['25%']}
             enablePanDownToClose={true}
             onClose={() => setRetweetModalOpen(false)}
+            handleIndicatorStyle={{
+              backgroundColor: 'grey',
+              width: 40,
+              height: 2.5,
+            }}
             backdropComponent={renderBackdrop}>
-            <BottomSheetView style={styles.contentContainer}>
-              <Text>Awesome 🎉</Text>
+            <BottomSheetView style={styles.retweetContainer}>
+              <TouchableOpacity style={styles.retweetButton}>
+                <Text>Repost</Text>
+                <Image
+                  style={styles.retweetIcon}
+                  source={require(retweetIcon)}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{...styles.retweetButton, marginTop: 10}}>
+                <Text>Retweet</Text>
+                <Image
+                  style={styles.retweetIcon}
+                  source={require(retweetIcon)}
+                />
+              </TouchableOpacity>
             </BottomSheetView>
           </BottomSheet>
         ) : (
@@ -749,7 +769,33 @@ const styles = StyleSheet.create({
   commentBottomContent: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: 20
+    marginTop: 20,
+  },
+
+  retweetContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 5,
+    backgroundColor: 'white',
+    paddingHorizontal: 14,
+  },
+  retweetButton: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#eee',
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    borderRadius: 10,
+    width: '100%',
+  },
+  retweetIcon: {
+    width: 22,
+    height: 22,
+    objectFit: 'contain',
   },
 });
 
