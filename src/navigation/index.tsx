@@ -1,4 +1,3 @@
-
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
@@ -7,7 +6,7 @@ import Account from '../screens/Account';
 import Search from '../screens/Search';
 import Create from '../screens/Create';
 import Like from '../screens/Like';
-import { Image } from 'react-native';
+import {Image} from 'react-native';
 
 //icons
 const homeBoldIcon = '../assets/icons/home-bold.png';
@@ -126,15 +125,17 @@ const HomeTabs = () => {
 
 const RootNavigator = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}>
-        <Stack.Screen name="home-tabs" component={HomeTabs} />
-        <Stack.Screen name="create" component={Create} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}>
+          <Stack.Screen name="home-tabs" component={HomeTabs} />
+          <Stack.Screen name="create" component={Create} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 };
 

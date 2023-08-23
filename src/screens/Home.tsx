@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useCallback, useState, useRef} from 'react';
 import {
   View,
   StyleSheet,
@@ -9,10 +9,15 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Pressable,
 } from 'react-native';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import BottomSheet, {
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
+
+type Props = {
+  navigation: any;
+};
 
 import {TabView, TabBar} from 'react-native-tab-view';
 const logo = '../assets/icons/threads-app-icon.png';
@@ -113,7 +118,8 @@ const FirstRoute = ({
   firstRef,
   onMomentumScrollBegin,
   openModal,
-  toggleModal
+  toggleModal,
+  navigation
 }: any) => {
   const [likedPost, setLikedPost] = useState(false);
   const [isOpen, setOpen] = useState(false);
@@ -210,7 +216,7 @@ const FirstRoute = ({
                   <TouchableOpacity>
                     <Image style={styles.icon} source={require(likeIcon)} />
                   </TouchableOpacity>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={()=>navigation.navigate('comment')}>
                     <Image style={styles.icon} source={require(commentIcon)} />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={toggleSheet}>
@@ -264,13 +270,18 @@ const SecondRoute = ({
   />
 );
 
-const Home = () => {
+const Home = ({navigation}: Props) => {
+  const [openCommentModal, setOpenCommentModal] = useState(true);
+  // ref
+  const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const [openModal, setOpenModal] = useState(false);
+  // variables
+  const snapPoints = ['30%'];
 
-  const toggleModal = () => {
-    setOpenModal(!openModal);
-  };
+  // callbacks
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
@@ -310,8 +321,7 @@ const Home = () => {
       case 'foryou':
         return (
           <FirstRoute
-            openModal={openModal}
-            toggleModal={toggleModal}
+            navigation={navigation}
             position={position}
             syncOffset={syncOffset}
             firstRef={firstRef}
@@ -321,6 +331,7 @@ const Home = () => {
       case 'following':
         return (
           <SecondRoute
+            navigation={navigation}
             position={position}
             syncOffset={syncOffset}
             secondRef={secondRef}
@@ -375,7 +386,7 @@ const Home = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={{flex: 1, borderRadius:20}}>
+      <SafeAreaView style={{flex: 1}}>
         <View
           style={{
             position: 'absolute',
@@ -392,25 +403,19 @@ const Home = () => {
           onIndexChange={setIndex}
           initialLayout={initialLayout}
         />
-        {openModal && (
-          <>
-            <Pressable style={styles.backdrop} onPress={toggleModal} />
-            <View
-              style={{
-                backgroundColor: 'white',
-                padding: 16,
-                height: 220,
-                width: '100%',
-                position: 'absolute',
-                bottom: -20 * 1.1,
-                borderTopRightRadius: 20,
-                borderTopLeftRadius: 20,
-                zIndex: 9999,
-                flex: 1,
-              }}></View>
-          </>
-        )}
       </SafeAreaView>
+      <GestureHandlerRootView>
+        <BottomSheet
+          ref={bottomSheetRef}
+          snapPoints={snapPoints}
+          enablePanDownToClose={true}
+          onClose={() => setOpenCommentModal(false)}>
+          <BottomSheetView style={styles.contentContainer}>
+            <Text>Awesome 🎉</Text>
+          </BottomSheetView>
+        </BottomSheet>
+      </GestureHandlerRootView>
+      
     </>
   );
 };

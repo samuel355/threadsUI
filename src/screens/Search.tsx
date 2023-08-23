@@ -24,7 +24,7 @@ const Search = () => {
     <GestureHandlerRootView style={{...styles.container}}>
       {isOpen && (
         <TouchableOpacity
-          onPress={()=>setIsOpen(false)}
+          onPress={() => setIsOpen(false)}
           style={styles.backDrop}
           activeOpacity={0.8}></TouchableOpacity>
       )}
@@ -39,11 +39,9 @@ const Search = () => {
           snapPoints={snapPoints}
           enablePanDownToClose={true}
           onClose={() => setIsOpen(false)}>
-          {isOpen && (
-            <BottomSheetView style={styles.contentContainer}>
-              <Text>Awesome 🎉</Text>
-            </BottomSheetView>
-          )}
+          <BottomSheetView style={styles.contentContainer}>
+            <Text>Awesome 🎉</Text>
+          </BottomSheetView>
         </BottomSheet>
       ) : (
         <></>
@@ -56,7 +54,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: 'lightblue',
+    backgroundColor: 'white',
     position: 'relative',
   },
   contentContainer: {

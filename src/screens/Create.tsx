@@ -1,6 +1,6 @@
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from '@gorhom/bottom-sheet';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import Home from './Home';
 
@@ -8,6 +8,18 @@ type Props = {
   navigation: any;
 };
 const Create = ({navigation}: Props) => {
+
+  const renderBackdrop = useCallback(
+    (props_: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        {...props_}
+        pressBehavior="close"
+        opacity={0.5}
+        disappearsOnIndex={-1}
+      />
+    ),
+    [],
+  );
   // ref
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -32,7 +44,7 @@ const Create = ({navigation}: Props) => {
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
         onClose={handleNavigation}
-        backdropComponent={Home}>
+        backdropComponent={renderBackdrop}>
         <View style={styles.contentContainer}>
           <Text>Awesome 🎉</Text>
           <TouchableOpacity onPress={handleNavigation}>

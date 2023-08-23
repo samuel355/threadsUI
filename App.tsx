@@ -1,13 +1,12 @@
-import { Text, View } from "react-native";
-import RootNavigator from "./src/navigation";
-import Home from "./src/screens/Home";
+import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import RootNavigator from './src/navigation';
 
 const App = () => {
-  return(
-    <>
+  return (
+    <BottomSheetModalProvider>
       <RootNavigator />
-    </>
-  )
-}
+    </BottomSheetModalProvider>
+  );
+};
 
 export default App;
