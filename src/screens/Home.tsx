@@ -9,8 +9,8 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Modal,
   Alert,
+  TextInput,
 } from 'react-native';
 import {GestureHandlerRootView, ScrollView} from 'react-native-gesture-handler';
 import BottomSheet, {
@@ -453,9 +453,78 @@ const Home = ({navigation}: Props) => {
             snapPoints={['95%']}
             enablePanDownToClose={true}
             onClose={() => setIsCommentModalOpen(false)}
+            handleIndicatorStyle={{
+              backfaceVisibility: 'hidden',
+              backgroundColor: 'grey',
+              width: 48,
+              height: 2.5,
+              opacity: 0,
+            }}
             backdropComponent={renderBackdrop}>
-            <BottomSheetView style={styles.contentContainer}>
-              <Text>Awesome 🎉</Text>
+            <BottomSheetView style={styles.commentModalContainer}>
+              <View style={styles.commentHeader}>
+                <TouchableOpacity onPress={() => setIsCommentModalOpen(false)}>
+                  <Text style={styles.cancel}>Cancel</Text>
+                </TouchableOpacity>
+                <Text style={styles.header}>Reply</Text>
+                <Text />
+              </View>
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={{
+                  marginHorizontal: 12,
+                  paddingTop: 8,
+                  paddingBottom: 200,
+                }}>
+                <View style={styles.commentContent}>
+                  <View style={{position: 'relative'}}>
+                    <Image
+                      style={styles.commentImage}
+                      source={require(`../assets/profile.jpg`)}
+                    />
+                    <View style={styles.verticalLine}></View>
+                  </View>
+                  <View style={styles.commentDetails}>
+                    <Text style={{fontWeight: 600, marginBottom: 4}}>
+                      sobal_official
+                    </Text>
+                    <Text>
+                      Behind the scenes, people are dating our thread WIVES.
+                      Chairman wo last warning nie hmm
+                    </Text>
+                  </View>
+                </View>
+
+                <View style={styles.commentBottomContent}>
+                  <View style={{position: 'relative'}}>
+                    <Image
+                      style={styles.commentImage}
+                      source={require(`../assets/profile.jpg`)}
+                    />
+                    <View style={styles.verticalLine}></View>
+                  </View>
+                  <View style={styles.commentDetails}>
+                    <Text style={{fontWeight: 600, marginBottom: 4}}>
+                      sobal_official
+                    </Text>
+                    <TextInput placeholder="Reply to sobal_official" />
+                  </View>
+                </View>
+              </ScrollView>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingHorizontal: 12,
+                }}>
+                <TouchableOpacity>
+                  <Text style={{color: 'gray'}}>Anyone can reply</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Text style={{color: 'blue'}}> Post</Text>
+                </TouchableOpacity>
+              </View>
             </BottomSheetView>
           </BottomSheet>
         ) : (
@@ -633,7 +702,55 @@ const styles = StyleSheet.create({
     flex: 1,
     zIndex: 1,
   },
+
+  // Comment Modal
   commentModalContainer: {},
+  commentHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    paddingBottom: 12,
+    borderBottomColor: '#eee',
+    borderBottomWidth: 1,
+  },
+  cancel: {
+    textAlign: 'left',
+    fontSize: 14,
+    marginLeft: 12,
+  },
+  header: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginRight: 55,
+    flex: 1,
+  },
+  commentContent: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  commentImage: {
+    width: 35,
+    height: 35,
+    objectFit: 'contain',
+    borderRadius: 200,
+  },
+  commentDetails: {
+    marginLeft: 10,
+  },
+  verticalLine: {
+    position: 'absolute',
+    borderLeftColor: '#eee',
+    borderLeftWidth: 1,
+    height: 35,
+    width: 1,
+    left: 15,
+    top: 45,
+  },
+  commentBottomContent: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: 20
+  },
 });
 
 export default Home;
