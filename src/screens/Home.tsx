@@ -179,6 +179,7 @@ const FirstRoute = ({
               },
             ]}>
             <TouchableOpacity
+              onPress={() => navigation.navigate('PostDetails')}
               style={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -221,7 +222,7 @@ const FirstRoute = ({
                   </View>
                 </View>
 
-                <TouchableOpacity style={styles.postContainer}>
+                <TouchableOpacity onPress={() => navigation.navigate('PostDetails')} style={styles.postContainer}>
                   <Text style={{lineHeight: 24}}>{item.content}</Text>
                 </TouchableOpacity>
 
@@ -569,12 +570,67 @@ const Home = ({navigation}: Props) => {
         {sendModalOpen ? (
           <BottomSheet
             ref={bottomSheetRef}
-            snapPoints={['55%']}
+            snapPoints={['45%']}
             enablePanDownToClose={true}
             onClose={() => setSendModalOpen(false)}
             backdropComponent={renderBackdrop}>
-            <BottomSheetView style={styles.contentContainer}>
-              <Text>Awesome 🎉</Text>
+            <BottomSheetView style={styles.sendModalContainer}>
+              <View style={styles.topSendButtonsContainer}>
+                <View style={styles.sendModalButtonLine}>
+                  <TouchableOpacity style={styles.sendModalButton}>
+                    <Text>Send on Instagram</Text>
+                    <Image
+                      style={styles.retweetIcon}
+                      source={require(retweetIcon)}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.sendModalButtonLine}>
+                  <TouchableOpacity style={styles.sendModalButton}>
+                    <Text>Add to Story</Text>
+                    <Image
+                      style={styles.retweetIcon}
+                      source={require(retweetIcon)}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.sendModalButtonLine}>
+                  <TouchableOpacity style={styles.sendModalButton}>
+                    <Text>Post to feed</Text>
+                    <Image
+                      style={styles.retweetIcon}
+                      source={require(retweetIcon)}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <TouchableOpacity style={styles.sendModalButton}>
+                  <Text>Post to X</Text>
+                  <Image
+                    style={styles.retweetIcon}
+                    source={require(retweetIcon)}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.downSendButtonsContainer}>
+                <View style={styles.sendModalButtonLine}>
+                  <TouchableOpacity style={styles.sendModalButton}>
+                    <Text>Copy link</Text>
+                    <Image
+                      style={styles.retweetIcon}
+                      source={require(retweetIcon)}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <TouchableOpacity style={styles.sendModalButton}>
+                    <Text>Share via...</Text>
+                    <Image
+                      style={styles.retweetIcon}
+                      source={require(retweetIcon)}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
             </BottomSheetView>
           </BottomSheet>
         ) : (
@@ -584,12 +640,39 @@ const Home = ({navigation}: Props) => {
         {menuOpen ? (
           <BottomSheet
             ref={bottomSheetRef}
-            snapPoints={['50%']}
+            snapPoints={['35%']}
             enablePanDownToClose={true}
             onClose={() => setMenuOpen(false)}
             backdropComponent={renderBackdrop}>
-            <BottomSheetView style={styles.contentContainer}>
-              <Text>Awesome 🎉</Text>
+            <BottomSheetView style={styles.menuModalContainer}>
+              <View style={{...styles.menuButtonContainer, marginBottom: 14}}>
+                <View style={styles.menuButtonLine}>
+                  <TouchableOpacity style={styles.menuModalButton}>
+                    <Text>Unfollow</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.menuButtonLine}>
+                  <TouchableOpacity style={styles.menuModalButton}>
+                    <Text>Mute</Text>
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <TouchableOpacity style={styles.menuModalButton}>
+                    <Text>Hide</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <View style={styles.menuButtonContainer}>
+                <View style={styles.menuButtonLine}>
+                  <TouchableOpacity style={styles.menuModalButton}>
+                    <Text style={{color: 'red'}}>Block</Text>
+                  </TouchableOpacity>
+                </View>
+                <TouchableOpacity style={styles.menuModalButton}>
+                  <Text style={{color: 'red'}}>Report</Text>
+                </TouchableOpacity>
+              </View>
             </BottomSheetView>
           </BottomSheet>
         ) : (
@@ -796,6 +879,61 @@ const styles = StyleSheet.create({
     width: 22,
     height: 22,
     objectFit: 'contain',
+  },
+
+  sendModalContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginHorizontal: 14,
+  },
+  topSendButtonsContainer: {
+    marginBottom: 12,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundColor: '#eee',
+    borderRadius: 10,
+    marginTop: 5,
+  },
+  sendModalButton: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 13,
+  },
+  downSendButtonsContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundColor: '#eee',
+    borderRadius: 10,
+  },
+  sendModalButtonLine: {
+    borderBottomColor: '#d2d2d2',
+    borderBottomWidth: 0.5,
+  },
+
+  menuModalContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: 8,
+  },
+  menuModalButton: {
+    backgroundColor: '#eee',
+    marginVertical: 12,
+    marginHorizontal: 13,
+  },
+  menuButtonContainer: {
+    backgroundColor: '#eee',
+    marginHorizontal: 14,
+    borderRadius: 10,
+  },
+  menuButtonLine: {
+    borderBottomColor: '#d2d2d2',
+    borderBottomWidth: 0.5,
   },
 });
 

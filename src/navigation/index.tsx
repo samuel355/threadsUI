@@ -7,6 +7,7 @@ import Search from '../screens/Search';
 import Create from '../screens/Create';
 import Like from '../screens/Like';
 import {Image} from 'react-native';
+import PostDetails from '../screens/PostDetails';
 
 //icons
 const homeBoldIcon = '../assets/icons/home-bold.png';
@@ -22,6 +23,18 @@ const userLightIcon = '../assets/icons/user-light.png';
 const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
+
+const HomeStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="Home Stack" component={Home} />
+      <Stack.Screen name="PostDetails" component={PostDetails} />
+    </Stack.Navigator>
+  );
+}
 
 const HomeTabs = () => {
   return (
@@ -45,7 +58,7 @@ const HomeTabs = () => {
           ),
         })}
         name="Home"
-        component={Home}
+        component={HomeStack}
       />
 
       <Tab.Screen
